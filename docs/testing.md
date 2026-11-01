@@ -2,14 +2,15 @@
 
 ## 当前能验证的内容
 
-本仓库处于设计阶段。执行以下检查，不需要摄像机、网盘账号或第三方 Python 包：
+P1 的静态检查和离线单元测试不需要摄像机、网盘账号或第三方 Python 包：
 
 ```sh
 python3 scripts/check_repo.py
+PYTHONPATH=src python3 -m unittest discover -s tests -t .
 git diff --check
 ```
 
-检查范围是必需文件、本地 Markdown 文件链接、配置契约及安全默认值、launchd 模板。不验证第三方链接在线状态、全部 Markdown 语法、真实设备能力、资源指标或备份正确性。GitHub Actions 运行同一静态检查。
+静态检查覆盖必需文件、本地 Markdown 链接、配置契约及安全默认值、launchd 模板。单元测试使用合成接口和伪进程，覆盖时间单位、分页、授权刷新、脱敏、Keychain ABI 边界及媒体故障处理；不验证真实设备能力、资源指标或备份正确性。GitHub Actions 运行同一静态检查和离线测试。
 
 ## 第一阶段：真实设备能力门槛
 

@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ezviz-sd-backup"
+version = "0.1.0"
+description = "Lightweight EZVIZ SD-card event recording probe for macOS"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+authors = [{ name = "Kevin Alliswell" }]
+dependencies = []
+
+[project.scripts]
+ezviz-sd-backup = "ezviz_sd_backup.cli:main"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]

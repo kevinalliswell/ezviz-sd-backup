@@ -1,4 +1,4 @@
-# Design contract only: the backup application is not implemented yet.
+# P1 probe configuration; daily run, upload and scheduling are not implemented.
 # Keep the real config under ~/Library/Application Support/ezviz-sd-backup/.
 config_version = 1
 

@@ -29,6 +29,7 @@ config.toml
 config.local.*
 *.local.toml
 credentials.*
+!src/**/credentials.py
 secrets.*
 *.pem
 *.key
