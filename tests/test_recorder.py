@@ -89,6 +89,18 @@ class RecorderTests(unittest.TestCase):
     def setUp(self) -> None:
         self.temporary = tempfile.TemporaryDirectory()
         self.directory = Path(self.temporary.name)
+        self.processes_by_pid: dict[int, FakeProcess] = {}
+
+        def killpg(pid: int, sig: int) -> None:
+            process = self.processes_by_pid[pid]
+            if sig == signal.SIGTERM:
+                process.terminate()
+            else:
+                process.kill()
+
+        killpg_patch = patch("ezviz_sd_backup.recorder.os.killpg", side_effect=killpg, create=True)
+        killpg_patch.start()
+        self.addCleanup(killpg_patch.stop)
         self.start = datetime(2024, 1, 1, tzinfo=timezone.utc)
         self.playback = PlaybackAddress(
             "https://media.invalid/history.flv?signature=private",
@@ -118,6 +130,7 @@ class RecorderTests(unittest.TestCase):
                 command, early_exit=early_exit, returncode=returncode, wait_timeout=wait_timeout
             )
             processes.append(process)
+            self.processes_by_pid[process.pid] = process
             commands.append(SimpleNamespace(command=command, options=kwargs))
             return process
 
@@ -168,6 +181,7 @@ class RecorderTests(unittest.TestCase):
             recorder.save(self.playback, self.directory / "event.mp4")
         self.assertEqual(caught.exception.error_code, "MEDIA_RESPONSE_INVALID")
         self.assertTrue(processes[0].terminated)
+        self.assertTrue(processes[0].stdin.buffer.closed)
 
     def test_non_flv_http_200_is_rejected(self) -> None:
         processes: list[FakeProcess] = []

@@ -282,20 +282,27 @@ class MediaRecorder:
 
     @staticmethod
     def _terminate(process: Any) -> None:
-        if process is None or process.poll() is not None:
+        if process is None:
             return
         try:
-            if os.name == "posix":
-                os.killpg(process.pid, signal.SIGTERM)
-            else:
-                process.terminate()
-            process.wait(timeout=5)
-        except (OSError, subprocess.SubprocessError):
+            if process.poll() is None:
+                try:
+                    if os.name == "posix":
+                        os.killpg(process.pid, signal.SIGTERM)
+                    else:
+                        process.terminate()
+                    process.wait(timeout=5)
+                except (OSError, subprocess.SubprocessError):
+                    try:
+                        if os.name == "posix":
+                            os.killpg(process.pid, signal.SIGKILL)
+                        else:
+                            process.kill()
+                        process.wait(timeout=5)
+                    except (OSError, subprocess.SubprocessError):
+                        pass
+        finally:
             try:
-                if os.name == "posix":
-                    os.killpg(process.pid, signal.SIGKILL)
-                else:
-                    process.kill()
-                process.wait(timeout=5)
-            except (OSError, subprocess.SubprocessError):
+                process.stdin.close()
+            except (AttributeError, OSError, ValueError):
                 pass
