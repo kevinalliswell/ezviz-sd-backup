@@ -5,6 +5,7 @@
 ## 验证
 
 - [ ] `python3 scripts/check_repo.py` 通过
+- [ ] `PYTHONPATH=src python3 -m unittest discover -s tests -t .` 通过
 - [ ] `git diff --check` 通过
 - [ ] 设计、配置及测试计划已按需同步
 - [ ] 未包含真实配置、凭据、录像、数据库或未脱敏日志

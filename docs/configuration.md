@@ -1,6 +1,6 @@
 # 配置与凭据约定
 
-以下是待实现的版本 1 配置契约。[完整示例](../examples/config.example.toml)可被静态检查解析，但应用尚未实现，不能据此启动备份。
+版本 1 配置契约已由 P1 `probe` 和凭据设置命令使用。[完整示例](../examples/config.example.toml)可被静态检查解析；每日备份运行时仍未实现，不能据此启动自动备份。
 
 ## 默认目录
 
@@ -51,7 +51,7 @@ API 超时、最多三次网络尝试及退避使用经过测试的程序默认�
 
 使用 macOS 登录钥匙串，服务名默认 `io.github.kevinalliswell.ezviz-sd-backup`，账号键分别为 `ezviz.app_key`、`ezviz.app_secret` 和可选的 `ezviz.video_code`。
 
-未来的凭据设置命令应在本机交互式输入，不把密钥放在命令参数、shell 历史、TOML、环境文件或项目仓库里。访问令牌缓存由应用受限权限保存并及时刷新；所有日志在输出之前脱敏。
+`set-credentials` 在本机隐藏输入，并通过 Security framework 写入 Keychain，不把密钥放在命令参数、shell 历史、TOML、环境文件或项目仓库里。访问令牌缓存由应用以受限权限保存并提前刷新；所有预期错误在输出之前脱敏。
 
 Keychain 在锁屏、重新登录和重启之后的非交互读取行为必须实测。读取被拒绝时退出并提示用户处理，不能修改系统的钥匙串安全设置以强行绕过。
 

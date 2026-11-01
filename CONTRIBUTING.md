@@ -1,6 +1,6 @@
 # 贡献指南
 
-感谢参与。本项目目前处于文档与能力验证准备阶段，没有备份应用实现。请先阅读 [需求](docs/requirements.md)、[架构](docs/architecture.md)、[路线图](docs/roadmap.md)和 [AGENTS.md](AGENTS.md)。
+感谢参与。本项目目前处于 P1 能力探测阶段，已有 `probe` 和离线测试，但每日备份、上传和调度尚未实现。请先阅读 [需求](docs/requirements.md)、[架构](docs/architecture.md)、[路线图](docs/roadmap.md)和 [AGENTS.md](AGENTS.md)。
 
 ## 提交问题
 
@@ -19,6 +19,7 @@
 
 ```sh
 python3 scripts/check_repo.py
+PYTHONPATH=src python3 -m unittest discover -s tests -t .
 git diff --check
 ```
 

@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   check:
-    name: Documentation and examples
+    name: Repository contracts and offline tests
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -29,5 +29,9 @@ jobs:
           python-version: '3.12'
       - name: Check repository contracts
         run: python scripts/check_repo.py
+      - name: Run offline unit tests
+        env:
+          PYTHONPATH: src
+        run: python -m unittest discover -s tests -t . -v
       - name: Check committed whitespace
         run: git show --format= --check HEAD

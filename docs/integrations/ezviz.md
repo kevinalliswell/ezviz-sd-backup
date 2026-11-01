@@ -12,6 +12,7 @@
 
 | 用途 | 方法与路径 | 关键字段及单位 | 来源 |
 | --- | --- | --- | --- |
+| 获取访问令牌 | `POST /api/lapp/token/get` | Body: `appKey`、`appSecret`；缓存令牌并在临期或 `10002` 时刷新 | [官方文档](https://open.ys7.com/help/81) |
 | 本地录像统一查询 | `GET /api/v3/device/local/video/unify/query` | Header: `accessToken`、`deviceSerial`、`localIndex`；Query: `recordType=2` 表示事件录像，`startTime` / `endTime` 为秒级时间戳 | [官方文档](https://open.ys7.com/help/3922) |
 | 兼容的录像查询路径 | `POST /api/lapp/video/by/time` | `recType=2` 表示本地录像；`startTime` / `endTime` 为毫秒时间戳；分页需 `version=2.0`、`pageSize` | [官方文档](https://open.ys7.com/help/1422) |
 | 获取历史回放地址 | `POST /api/lapp/v2/live/address/get` | `type=2` 表示本地回放；`protocol=4` 表示 FLV；`startTime` / `stopTime` 使用 `YYYY-MM-DD HH:mm:ss` | [官方文档](https://open.ys7.com/help/1414) |

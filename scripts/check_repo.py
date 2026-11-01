@@ -33,6 +33,10 @@ REQUIRED = (
     "docs/adr/0002-historical-export-gate.md",
     "docs/adr/0003-incremental-verification.md",
     "examples/config.example.toml", PLIST, "scripts/check_repo.py",
+    "pyproject.toml", "src/ezviz_sd_backup/__main__.py",
+    "src/ezviz_sd_backup/cli.py", "src/ezviz_sd_backup/config.py",
+    "src/ezviz_sd_backup/credentials.py", "src/ezviz_sd_backup/ezviz.py",
+    "src/ezviz_sd_backup/recorder.py", "tests/test_ezviz.py", "tests/test_recorder.py",
 )
 SKIP_DIRS = {
     ".git", ".venv", "venv", "node_modules", "__pycache__", "dist", "build",

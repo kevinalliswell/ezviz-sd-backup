@@ -7,8 +7,8 @@
 
 A lightweight, scheduled macOS backup tool for EZVIZ SD-card event recordings and AliPan.
 
-> **当前阶段：设计与 GitHub 基础建设。备份应用尚未实现，没有可安装的应用或可执行的备份命令。**
-> 已确认官方接口提供本地录像查询与回放能力；尚未用真实 C6C 验证授权、事件索引、加密回放或视频保存。
+> **当前阶段：P1 能力探测。** 已提供 `probe`、Keychain 凭据设置、历史事件分页查询和单段 HTTP-FLV 导出代码，离线合成测试通过。
+> 每日 `run`、SQLite、网盘上传和定时备份仍未实现；尚未用真实 C6C 或目标 Mac 验证授权、事件索引、加密回放、视频保存及资源指标。
 
 ## 目标场景
 
@@ -57,15 +57,24 @@ flowchart LR
 
 ## 本仓库现在可以运行什么
 
-仅可执行仓库资料检查，需要 Python 3.12+，无第三方 Python 依赖：
+仓库检查和离线测试需要 Python 3.12+，无第三方 Python 运行时依赖：
 
 ```sh
 python3 scripts/check_repo.py
+PYTHONPATH=src python3 -m unittest discover -s tests -t .
+PYTHONPATH=src python3 -m ezviz_sd_backup --help
 ```
 
-该检查会验证本地 Markdown 链接、示例 TOML、launchd plist 和基本仓库结构；**不会访问摄像机、登录网盘、上传视频或安装定时任务**。同一检查已配置到 GitHub Actions。
+在目标 Mac 上，将[配置示例](examples/config.example.toml)复制到用户 Library、填写真实路径和设备信息后，可交互设置 Keychain 凭据并查询指定自然日：
 
-[配置示例](examples/config.example.toml)和 [launchd 模板](examples/launchd/io.github.kevinalliswell.ezviz-sd-backup.plist)是设计契约，应用实现前不能用于实际备份。
+```sh
+PYTHONPATH=src python3 -m ezviz_sd_backup set-credentials --config "$HOME/Library/Application Support/ezviz-sd-backup/config.toml"
+PYTHONPATH=src python3 -m ezviz_sd_backup probe --config "$HOME/Library/Application Support/ezviz-sd-backup/config.toml" --date 2026-10-31
+```
+
+命令只输出摄像机当地事件时间和稳定事件键前缀。确认一个与 App 对应的历史事件后，可用 `--export-key EVENT_KEY_PREFIX --seconds 60` 导出一次；签名 URL 只通过 Python HTTPS 流送入 FFmpeg stdin，不进入子进程参数。
+
+**实机探测仍未执行。** `run`/`status`、SQLite、上传、远端核验及 launchd 自动备份尚未实现，现有 [launchd 模板](examples/launchd/io.github.kevinalliswell.ezviz-sd-backup.plist)不能安装为可工作的备份任务。
 
 ## 参与开发
 
