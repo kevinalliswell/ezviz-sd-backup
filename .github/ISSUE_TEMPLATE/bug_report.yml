@@ -1,0 +1,36 @@
+name: 问题报告 / Bug report
+description: 报告文档、仓库检查或已实现功能的问题
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        当前没有备份应用实现。请区分文档设计和已发布功能。
+        不要上传录像、配置、序列号、验证码、签名 URL 或原始日志。
+        安全漏洞请通过仓库 Security 页面的私密入口报告。
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: 隐私检查
+      options:
+        - label: 我已移除凭据、个人信息和家庭录像，以下仅含脱敏信息。
+          required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: 问题和预期行为
+      description: 说明具体文档或已实现功能，附最小复现步骤。
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: 环境及版本
+      description: 按相关性填写提交版本、macOS/CPU、工具版本和设备型号/固件；不要填写序列号。
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: 脱敏结果
+      description: 错误类别、预期/实际对比；不要粘贴完整请求、响应或未审阅的日志。

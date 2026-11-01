@@ -1,0 +1,43 @@
+# Design contract only: the backup application is not implemented yet.
+# Keep the real config under ~/Library/Application Support/ezviz-sd-backup/.
+config_version = 1
+
+[camera]
+name = "客厅"
+device_serial = "<DEVICE_SERIAL>"
+channel = 1
+
+[ezviz]
+keychain_service = "io.github.kevinalliswell.ezviz-sd-backup"
+
+[backup]
+timezone = "Asia/Shanghai"
+lookback_days = 3
+max_segment_seconds = 1800
+max_run_seconds = 10800
+download_concurrency = 1
+upload_concurrency = 1
+
+[storage]
+data_dir = "~/Library/Application Support/ezviz-sd-backup"
+max_spool_bytes = 2147483648
+min_free_bytes = 5368709120
+
+[media]
+# Apple Silicon examples; replace with the actual installed executable paths.
+ffmpeg_path = "/opt/homebrew/bin/ffmpeg"
+ffprobe_path = "/opt/homebrew/bin/ffprobe"
+
+[alipan]
+binary_path = "/opt/homebrew/bin/aliyunpan"
+config_dir = "~/Library/Application Support/ezviz-sd-backup/aliyunpan"
+remote_root = "/家庭监控"
+
+[cleanup]
+enabled = false
+keep_days = 14
+require_verification = "sha1"
+
+[logging]
+level = "INFO"
+directory = "~/Library/Logs/ezviz-sd-backup"

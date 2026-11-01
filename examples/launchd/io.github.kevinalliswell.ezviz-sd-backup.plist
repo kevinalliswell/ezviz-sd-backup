@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- Design template only. The backup module does not exist yet. Do not install as-is. -->
+<!-- Replace all placeholders with XML-escaped absolute paths after implementing and testing. -->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>io.github.kevinalliswell.ezviz-sd-backup</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>__PYTHON_BIN__</string>
+        <string>-m</string>
+        <string>ezviz_sd_backup</string>
+        <string>run</string>
+        <string>--config</string>
+        <string>__CONFIG_PATH__</string>
+    </array>
+    <key>WorkingDirectory</key>
+    <string>__APP_DIR__</string>
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>3</integer>
+        <key>Minute</key>
+        <integer>15</integer>
+    </dict>
+    <key>ProcessType</key>
+    <string>Background</string>
+    <key>Nice</key>
+    <integer>10</integer>
+    <key>LowPriorityIO</key>
+    <true/>
+    <key>Umask</key>
+    <integer>63</integer>
+    <key>StandardOutPath</key>
+    <string>__LOG_DIR__/launchd.stdout.log</string>
+    <key>StandardErrorPath</key>
+    <string>__LOG_DIR__/launchd.stderr.log</string>
+</dict>
+</plist>
